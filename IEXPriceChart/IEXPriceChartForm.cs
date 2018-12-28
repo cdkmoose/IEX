@@ -28,10 +28,6 @@ namespace IEXPriceChart
         {
             priceChart.Titles.Add("Price History");
             priceChart.Series.Clear();
-            priceChart.Series.Add("Ticker");
-            priceChart.Series["Ticker"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
-            priceChart.Series["Ticker"].XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Date;
-            priceChart.Series["Ticker"].YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
         }
 
         private async void chartButton_Click(object sender, EventArgs e)
@@ -46,10 +42,23 @@ namespace IEXPriceChart
             List<IEXChartDataPoint> values = await GetPriceData(tickerText.Text);
             if (values != null)
             {
+                priceChart.Series.Add("Close");
+                priceChart.Series["Close"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+                priceChart.Series["Close"].XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Date;
+                priceChart.Series["Close"].YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+                priceChart.Series["Close"].XValueMember = "PriceDate";
+                priceChart.Series["Close"].YValueMembers = "PriceClose";
+
+                priceChart.Series.Add("Volume");
+                priceChart.Series["Volume"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
+                priceChart.Series["Volume"].XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Date;
+                priceChart.Series["Volume"].YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
+                priceChart.Series["Volume"].XValueMember = "PriceDate";
+                priceChart.Series["Volume"].YValueMembers = "Volume";
+
                 priceChart.DataSource = values;
-                priceChart.Series["Ticker"].XValueMember = "PriceDate";
-                priceChart.Series["Ticker"].YValueMembers = "PriceClose";
                 priceChart.DataBind();
+
 
             }
         }
