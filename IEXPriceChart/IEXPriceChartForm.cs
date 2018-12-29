@@ -27,6 +27,7 @@ namespace IEXPriceChart
         private void IEXPriceChartForm_Load(object sender, EventArgs e)
         {
             priceChart.Titles.Add("Price History");
+            priceChart.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
             priceChart.Series.Clear();
         }
 
@@ -48,6 +49,9 @@ namespace IEXPriceChart
                 priceChart.Series["Close"].YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
                 priceChart.Series["Close"].XValueMember = "PriceDate";
                 priceChart.Series["Close"].YValueMembers = "PriceClose";
+                priceChart.Series["Close"].YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Primary;
+                priceChart.ChartAreas[0].AxisY.LabelStyle.ForeColor = priceChart.Series["Close"].Color = Color.Blue;
+                priceChart.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
 
                 priceChart.Series.Add("Volume");
                 priceChart.Series["Volume"].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
@@ -55,6 +59,9 @@ namespace IEXPriceChart
                 priceChart.Series["Volume"].YValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
                 priceChart.Series["Volume"].XValueMember = "PriceDate";
                 priceChart.Series["Volume"].YValueMembers = "Volume";
+                priceChart.Series["Volume"].YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;
+                priceChart.ChartAreas[0].AxisY2.LabelStyle.ForeColor = priceChart.Series["Volume"].Color = Color.Green;
+                priceChart.ChartAreas[0].AxisY2.MajorGrid.Enabled = false;
 
                 priceChart.DataSource = values;
                 priceChart.DataBind();
